@@ -1,0 +1,31 @@
+# permissions for end users to edit appofapps.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: appofapps-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: app-of-app-visualizer
+    app.kubernetes.io/part-of: app-of-app-visualizer
+    app.kubernetes.io/managed-by: kustomize
+  name: appofapps-editor-role
+rules:
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appofapps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appofapps/status
+  verbs:
+  - get

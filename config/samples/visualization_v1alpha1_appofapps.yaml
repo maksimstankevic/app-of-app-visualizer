@@ -1,0 +1,12 @@
+apiVersion: visualization.magiccicd/v1alpha1
+kind: AppOfApps
+metadata:
+  labels:
+    app.kubernetes.io/name: appofapps
+    app.kubernetes.io/instance: appofapps-sample
+    app.kubernetes.io/part-of: app-of-app-visualizer
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: app-of-app-visualizer
+  name: appofapps-sample
+spec:
+  # TODO(user): Add fields here

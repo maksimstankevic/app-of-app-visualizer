@@ -1,0 +1,5 @@
+## Append samples of your project ##
+resources:
+- visualization_v1alpha1_appofapps.yaml
+- visualization_v1alpha1_appversion.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples
