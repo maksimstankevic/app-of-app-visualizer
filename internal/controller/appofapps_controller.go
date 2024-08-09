@@ -20,6 +20,7 @@ import (
 	"context"
 
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/client-go/tools/record"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -30,12 +31,15 @@ import (
 // AppOfAppsReconciler reconciles a AppOfApps object
 type AppOfAppsReconciler struct {
 	client.Client
-	Scheme *runtime.Scheme
+	Scheme   *runtime.Scheme
+	Recorder record.EventRecorder
 }
 
 //+kubebuilder:rbac:groups=visualization.magiccicd,resources=appofapps,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=visualization.magiccicd,resources=appofapps/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=visualization.magiccicd,resources=appofapps/finalizers,verbs=update
+//+kubebuilder:rbac:groups=core,resources=events,verbs=create;patch
+//+kubebuilder:rbac:groups=visualization.magiccicd,resources=appversion,verbs=get;list;watch;create;update;patch;delete
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -47,8 +51,9 @@ type AppOfAppsReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.16.3/pkg/reconcile
 func (r *AppOfAppsReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
+	log := log.FromContext(ctx)
 
+	log.Info("HELP! HELP! HELP! HELP! HELP!")
 	// TODO(user): your logic here
 
 	return ctrl.Result{}, nil
@@ -58,5 +63,6 @@ func (r *AppOfAppsReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 func (r *AppOfAppsReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&visualizationv1alpha1.AppOfApps{}).
+		Owns(&visualizationv1alpha1.AppVersion{}).
 		Complete(r)
 }
