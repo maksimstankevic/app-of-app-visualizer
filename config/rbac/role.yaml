@@ -5,6 +5,13 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
   - visualization.magiccicd
   resources:
   - appofapps
@@ -30,3 +37,15 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appversion
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
