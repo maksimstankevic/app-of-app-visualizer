@@ -40,7 +40,7 @@ rules:
 - apiGroups:
   - visualization.magiccicd
   resources:
-  - appversion
+  - appversions
   verbs:
   - create
   - delete
@@ -49,3 +49,17 @@ rules:
   - patch
   - update
   - watch
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appversions/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appversions/status
+  verbs:
+  - get
+  - patch
+  - update

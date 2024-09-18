@@ -1,0 +1,84 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "app-of-apps-visualizer.fullname" . }}-manager-role
+  labels:
+  {{- include "app-of-apps-visualizer.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appofapps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appofapps/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appofapps/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appversions
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appversions/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - visualization.magiccicd
+  resources:
+  - appversions/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "app-of-apps-visualizer.fullname" . }}-manager-rolebinding
+  labels:
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: app-of-app-visualizer
+    app.kubernetes.io/part-of: app-of-app-visualizer
+  {{- include "app-of-apps-visualizer.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: '{{ include "app-of-apps-visualizer.fullname" . }}-manager-role'
+subjects:
+- kind: ServiceAccount
+  name: '{{ include "app-of-apps-visualizer.fullname" . }}-controller-manager'
+  namespace: '{{ .Release.Namespace }}'
